@@ -1,6 +1,7 @@
 // method 1
 // Make an extra copy and then rotate.
 // Time complexity: O(n). Space complexity: O(n)
+// 这么理解：下标为0的转移到下标为3，下标为1的转移到下标为4，以此类推，下标为i的转移到下标为(i+k)%n
 class Solution 
     {
     public:
