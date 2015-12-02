@@ -1,3 +1,5 @@
+// 整个solution的关键在于整除求余 % 运算符的合理利用
+
 // method 1
 // Make an extra copy and then rotate.
 // Time complexity: O(n). Space complexity: O(n)
