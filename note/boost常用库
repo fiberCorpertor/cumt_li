@@ -1,0 +1,22 @@
+Boost库是一个经过千锤百炼、可移植、提供源代码的C++库；Boost库为我们带来了最新、最酷、最实用的技术，是不折不扣的“准”标准库。
+Boost.Regex         正则表达式库，解决大量模式匹配的问题；
+Boost.Spirit          多用途、递归的预防分析器；使用它可以创建命令行分析器或语言预处理器
+Boost.Tokenizer    把字符序列分割成记号，
+Boost.Any            Array数组，Compressed_pair=std::pair,Dynamic_bitset=std::bitset
+Boost.Graph         处理图结构的库
+Boost.Iterator       创建新的迭代器类型的框架，还提供了许多有用的迭代器适配器
+
+函数对象及高级编程
+Boost.Bind            对标准库的绑定器bind1st 和 bind2nd的泛化
+Boost.Function      实现了一个泛型的回调机制。它提供了函数指针、函数对象和成员函数指针的存储和后续的调用
+Boost.Functional    提供C++标准库的适配器的加强版,消除了在标准库算法中使用函数指针时必须用ptr_fun的问题
+
+Boost.Lambda       为C++提供lambda表达式及无名函数
+Boost.Signals        信号和接收系统,
+Lambda                 在调用的地方定义短小匿名的函数对象，很实用的functional功能
+Mpl                       用模板实现的元编程框架
+Thread                  可移植的C++多线程库
+Python                  把C++类和函数映射到Python之中
+Pool                      内存池管理
+smart_ptr             5个智能指针，学习智能指针必读
+concept check       检查泛型编程中的concept
