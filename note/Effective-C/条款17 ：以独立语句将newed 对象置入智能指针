@@ -1,0 +1,90 @@
+c++编译器会优化你的代码，会根据优先权来选择优先执行哪些代码。C++编译器以什么样的此讯完成这些事情呢？弹性很大。这和其他诸如java，c#不同。她们总是以特定顺序来执行。
+// store_new.cpp : 定义控制台应用程序的入口点。  
+  
+//2011/9/24 by wallwind on sunrise  
+  
+  
+#include "stdafx.h"  
+  
+#include <iostream>  
+  
+#include <memory>  
+  
+using namespace std;  
+
+class Widget  
+{  
+
+public:  
+    Widget()  
+    {  
+        cout<<"Widget()"<<endl;  
+    }  
+  
+    ~Widget()  
+    {  
+        cout<<"Widget()"<<endl;  
+    }  
+};  
+  
+int priority()  
+{  
+    throw new runtime_error("Exception");  
+    //return 0;  
+}  
+  
+void processWidger(auto_ptr<Widget> pw,int priority){}  
+  
+int _tmain(int argc, _TCHAR* argv[])  
+{
+    processWidger(auto_ptr<Widget>(new Widget()),priority());  
+    system("pause");  
+    return 0;  
+}  
+Priority函数返回一个执行的优先级， processWidger函数则根据优先级来处理某个类型的对象（许多程序员有时候愿意将某个函数直接做为参数传递进另个函数内）。
+1、调用X的构造函数。
+2、调用auto_ptr<Widget>的构造函数。
+3、调用Priority函数。
+看上去井然有序的条件，C++编译器未必会选择这么做。也许编译器选择将调用Priority函数放在第二的位置会生成更高效的代码也说不定。那么顺序就会改为：
+1、调用X的构造函数。
+2、调用Priority函数。
+3、调用auto_ptr<Widget>的构造函数。
+那么如果调用Priority函数产生异常怎么办？auto_ptr并没有获得它需要保管的资源，而那段资源也不会遭到释放，有一种资源泄漏的方式。
+解决方式就是在外面完成智能指针的存储，编译器对于跨越语句的各项操作不会选择重新排列。这样智能指针依然获得了对所指向资源的保护。
+
+// store_new.cpp : 定义控制台应用程序的入口点。  
+//2011/9/24 by wallwind on sunrise  
+#include "stdafx.h"  
+#include <iostream>  
+#include <memory>  
+using namespace std;  
+class Widget  
+{  
+public:  
+    Widget()  
+    {  
+        cout<<"Widget()"<<endl;  
+    }  
+    ~Widget()  
+    {  
+        cout<<"Widget()"<<endl;  
+    }  
+};  
+int priority()  
+{  
+    throw new runtime_error("Exception");  
+    //return 0;  
+}  
+void processWidger(auto_ptr<Widget> pw,int priority){}  
+int _tmain(int argc, _TCHAR* argv[])  
+{  
+    auto_ptr<Widget> pw(new Widget());  
+    processWidger(pw,priority());  
+    system("pause");  
+    return 0;  
+}  
+
+由于编译器对"跨越语句块的各项操作"失去了执行重新排列的自由,所以编译器不能在它们之间任意选择执行顺序.
+
+请记住:
+■ 以独立语句将newed对象存储于(置入)智能指针内.如果不这样做,一旦异常被抛出,有可能导致难以察觉的资源泄露.
